@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SAM Lab — Spatial Analysis & Modelling Laboratory, IIT Kharagpur</title>
+  <link rel="icon" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+  <meta name="theme-color" content="#003366">
+
+  <meta property="og:title" content="SAM Lab — IIT Kharagpur">
+  <meta property="og:description" content="Geospatial intelligence for climate, ecology, and sustainable resource management.">
+  <meta property="og:image" content="images/hero_forest.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Scripts -->
+  <script src="scripts.js" defer></script>
+</head>
+<body>
+  <!-- Header (shared) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <!-- Point to your actual logo file -->
+        <img class="brand-logo" src="images/samlab-logo.png" alt="SAM Lab Logo" />
+        <!-- <span class="brand-text">SAM Lab</span> -->
+      </a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul id="nav-links" class="nav-list">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="abouts.html">About</a></li>
+          <li><a href="team.html" class="active">People</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="instruments.html" class="active">Instruments</a></li>
+
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero hero--canopy">
+    <div class="hero__overlay"></div>
+    <div class="container hero__content">
+      <h1 class="hero__title">Spatial Analysis & Modelling Laboratory</h1>
+      <p class="hero__tagline">
+        Geospatial intelligence for climate, ecology, and sustainable resource management at IIT Kharagpur.
+      </p>
+      <div class="hero__cta">
+        <a href="abouts.html" class="btn btn--primary">Explore our research</a>
+        <a href="publications.html" class="btn btn--ghost">Latest publications</a>
+      </div>
+    </div>
+  </section>
+
+<a class="floating-course" 
+   href="https://isgisrs2025.com/" 
+   target="_blank" 
+   rel="noopener">
+   ISG-ISRS National Symposium 2025: Geomatics and Space Innovations towards Atmanirbhar Bharat: Insights and Frontiers and Annual Conventions
+
+</a>
+
+
+  <!-- RESEARCH FOCUS (dynamic cards filled by JS) -->
+  <section id="focus" class="section">
+    <div class="container">
+      <h2 class="section-title">Research Focus</h2>
+      <p class="muted">
+        We advance remote sensing, GeoAI, and landscape–climate science to understand ecosystems, carbon dynamics, and environmental change.
+      </p>
+      <div id="focusGrid" class="grid grid-3"></div>
+    </div>
+  </section>
+
+  <!-- QUICK LINKS -->
+  <section id="quick" class="section section--light">
+    <div class="container">
+      <div class="grid grid-3">
+        <a class="tile" href="team.html">
+          <h3>Meet the Team</h3>
+          <p>Faculty, scholars, and students shaping geospatial science.</p>
+          <span class="tile-cta">See members →</span>
+        </a>
+        <a class="tile" href="publications.html">
+          <h3>Publications</h3>
+          <p>Peer-reviewed work in remote sensing, ecology, and modelling.</p>
+          <span class="tile-cta">Browse papers →</span>
+        </a>
+        <a class="tile" href="aboutus.html">
+          <h3>About the Lab</h3>
+          <p>What we study, how we work, and the tools we use.</p>
+          <span class="tile-cta">Learn more →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 SAM Lab, Centre for Ocean, River, Atmosphere &amp; Land Sciences (CORAL), IIT Kharagpur. All rights reserved.</p>
+      <p class="muted small">
+        Address: J C Ghosh &amp; P C Ray Twin Science Block, IIT Kharagpur, Paschim Medinipur, West Bengal, India – 721302
+      </p>
+    </div>
+  </footer>
+
+  <!-- Inline data the scripts will use on all pages -->
+  <script id="samlab-data" type="application/json">
+  {
+    "focus": [
+      { "title": "Ecological Modelling", "desc": "Process-based and data-driven models to study species niches, community structure, and ecosystem function." },
+      { "title": "Landscape Processes & Climate", "desc": "Connectivity, fragmentation, and hydro-climate variability from local to regional scales." },
+      { "title": "Remote Sensing & GeoAI", "desc": "Optical, SAR, LiDAR and deep learning for classification, change detection, and feature extraction." },
+      { "title": "Carbon & Biomass Dynamics", "desc": "Above-ground biomass, carbon accounting, and productivity patterns under climate variability." },
+      { "title": "Soil–Water Systems", "desc": "Hydrology, sediment transport, and water balance modelling for sustainable management." },
+      { "title": "Fire & Risk", "desc": "Fire spread simulation and landscape risk assessment to inform preparedness and mitigation." }
+    ]
+  }
+  </script>
+</body></html>

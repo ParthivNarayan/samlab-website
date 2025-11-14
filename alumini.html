@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Former Students — SAMLab</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Shared styles + behavior -->
+  <link rel="stylesheet" href="styles.css" />
+  <script src="scripts.js" defer></script>
+
+  <!-- Meta (optional but nice) -->
+  <meta name="description" content="Former students of SAMLab, CORAL, IIT Kharagpur — alumni next moves and current positions." />
+</head>
+<body>
+
+  <!-- Header (same across site) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <img class="brand-logo" src="images/samlab-logo.png" alt="SAM Lab Logo" />
+        <span class="brand-text">SAMLab</span>
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul id="nav-links" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="abouts.html">About</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="alumini.html" class="active">Alumni</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Sub-hero -->
+  <section class="subhero">
+    <div class="container">
+      <h1>Former Students</h1>
+      <p class="muted">Alumni of SAMLab — their next moves and current positions.</p>
+    </div>
+  </section>
+
+  <!-- Controls + list -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Toolbar -->
+      <div class="toolbar" role="region" aria-label="Filters">
+        <input id="alumniSearch" class="input" type="search" placeholder="Search name, next move, current position…" aria-label="Search alumni" />
+        <select id="alumniFilter" class="select" aria-label="Filter by type">
+          <option value="all">All types</option>
+          <option value="PhD">PhD</option>
+          <option value="MTech">MTech</option>
+          <option value="MS">MS</option>
+        </select>
+      </div>
+
+      <!-- Optional grouping by year (toggle via JS if you want) -->
+      <div id="former-students-list" class="grid grid-2" aria-live="polite"></div>
+
+      <!-- Empty-state container -->
+      <div id="alumniEmpty" class="muted" style="display:none;">No former students to display.</div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 SAMLab • CORAL, IIT KGP, India</p>
+    </div>
+  </footer>
+
+  <!-- Page script: fetch JSON and render cards -->
+  <script>
+  (function(){
+    const GRID = document.getElementById('former-students-list');
+    const EMPTY = document.getElementById('alumniEmpty');
+    const SEARCH = document.getElementById('alumniSearch');
+    const FILTER = document.getElementById('alumniFilter');
+
+    let ALUMNI = [];
+
+    function cardTemplate(a){
+      const yearBit = a.year ? ` • ${a.year}` : '';
+      const nextBit = a.next ? `<strong>Next move:</strong> ${a.next}<br>` : '';
+      const currBit = a.current ? `<strong>Current:</strong> ${a.current}` : '';
+      return `
+        <div class="team-card">
+          <img loading="lazy" src="${a.img || 'images/placeholder.jpg'}" alt="${a.name}">
+          <div class="meta">
+            <div class="name">${a.name || '—'}</div>
+            <div class="role">${a.type || ''}${yearBit}</div>
+            <div class="bio">${nextBit}${currBit}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function render(list){
+      if (!list || !list.length){
+        GRID.innerHTML = '';
+        EMPTY.style.display = 'block';
+        return;
+      }
+      EMPTY.style.display = 'none';
+      GRID.innerHTML = list.map(cardTemplate).join('');
+    }
+
+    function applyFilters(){
+      const q = (SEARCH.value || '').toLowerCase().trim();
+      const typeSel = (FILTER.value || 'all').toLowerCase();
+
+      const filtered = ALUMNI.filter(a => {
+        const t = (a.type || '').toLowerCase();
+        const matchesType = (typeSel === 'all') ? true : t.includes(typeSel);
+        const hay = [a.name, a.type, a.year, a.next, a.current].join(' ').toLowerCase();
+        const matchesQuery = q ? hay.includes(q) : true;
+        return matchesType && matchesQuery;
+      });
+
+      // Sort newest first if year is present
+      filtered.sort((a,b) => String(b.year||'').localeCompare(String(a.year||'')));
+      render(filtered);
+    }
+
+    // Fetch JSON (generated from your Excel)
+    fetch('data/alumni.json')
+      .then(r => {
+        if (!r.ok) throw new Error('Failed to load data/alumni.json');
+        return r.json();
+      })
+      .then(json => {
+        ALUMNI = (json.alumni || []).map(r => ({
+          name: (r.name||'').trim(),
+          type: (r.type||'').trim(),
+          year: String(r.year||'').trim(),
+          next: (r.next||'').trim(),
+          current: (r.current||'').trim(),
+          img: (r.img||'images/placeholder.jpg')
+        }));
+        applyFilters();
+      })
+      .catch(err => {
+        console.error(err);
+        GRID.innerHTML = '';
+        EMPTY.textContent = 'Could not load alumni data (data/alumni.json).';
+        EMPTY.style.display = 'block';
+      });
+
+    // Wire up controls
+    SEARCH.addEventListener('input', applyFilters);
+    FILTER.addEventListener('change', applyFilters);
+  })();
+  </script>
+</body>
+</html>

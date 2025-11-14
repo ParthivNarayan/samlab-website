@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Instruments — SAM Lab</title>
+
+  <link rel="icon" href="images/favicon.png">
+  <meta name="theme-color" content="#003366">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="scripts.js" defer></script>
+
+  <style>
+    /* Scoped instruments styles (single-column, left-aligned) */
+    .instruments-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    .instrument-card { display:flex; gap:1rem; align-items:flex-start; padding:1rem; border-radius:10px; background:#fff; border:1px solid rgba(0,0,0,.06); }
+    .instrument-card img { width:160px; height:110px; object-fit:cover; border-radius:8px; flex-shrink:0; }
+    .instrument-meta .title { font-weight:700; color:var(--blue-900); margin-bottom:.25rem; font-size:1.05rem; }
+    .instrument-meta .desc { color:var(--ink); margin-bottom:.25rem; }
+    .toolbar { display:flex; gap:.6rem; align-items:center; margin-bottom:1rem; }
+    .btn-small { padding:.35rem .6rem; border-radius:8px; font-weight:700; text-decoration:none; display:inline-block; }
+    /* Modal */
+    .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; z-index:1500; }
+    .modal { width:min(880px,94%); background:#fff; padding:1rem; border-radius:12px; box-shadow:0 20px 40px rgba(2,6,23,.2); max-height:86vh; overflow:auto; }
+    .modal .modal-body { display:grid; grid-template-columns:260px 1fr; gap:1rem; }
+    .modal .modal-body img { width:100%; height:180px; object-fit:cover; border-radius:8px; }
+    @media (max-width:900px){ .modal .modal-body{ grid-template-columns:1fr; } .instrument-card img{width:120px;height:90px} }
+  </style>
+</head>
+<body class="page-instruments">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand"><img class="brand-logo" src="images/samlab-logo.png" alt="SAM Lab Logo"></a>
+      <nav class="main-nav" aria-label="Primary">
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul id="nav-links" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="abouts.html">About</a></li>
+          <li><a href="team.html">People</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="instruments.html" class="active">Instruments</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="subhero">
+    <div class="container">
+      <h1>Lab Instruments</h1>
+      <p class="muted">Key instruments at SAM Lab — short description and photo. Click <strong>Details</strong> for a larger view.</p>
+    </div>
+  </section>
+
+  <!-- Controls + grid -->
+  <section class="section">
+    <div class="container">
+      <div class="toolbar">
+        <input id="instrSearch" class="input" placeholder="Search name or keyword…" />
+        <select id="instrCategory" class="select">
+          <option value="all">All categories</option>
+          <option value="Remote Sensing">Remote Sensing</option>
+          <option value="Field Equipment">Field Equipment</option>
+          <option value="Lab Analysis">Lab Analysis</option>
+          <option value="Imaging">Imaging</option>
+        </select>
+        <a id="downloadJson" class="btn btn--ghost btn-small" style="margin-left:auto">Download JSON</a>
+      </div>
+
+      <div id="instrumentsGrid" class="instruments-grid" aria-live="polite"></div>
+
+      <div id="instrumentsEmpty" class="muted" style="display:none">No instruments found.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 SAM Lab, CORAL, IIT Kharagpur</p>
+    </div>
+  </footer>
+
+  <!-- Modal container -->
+  <div id="modalRoot" style="display:none"></div>
+
+  <!-- Script: fetch data/instruments.json and render -->
+  <script>
+  (function(){
+    const grid = document.getElementById('instrumentsGrid');
+    const empty = document.getElementById('instrumentsEmpty');
+    const search = document.getElementById('instrSearch');
+    const category = document.getElementById('instrCategory');
+    const downloadBtn = document.getElementById('downloadJson');
+    const modalRoot = document.getElementById('modalRoot');
+
+    let INSTR = [];
+
+    function cardHTML(item){
+      const img = item.img || 'images/placeholder.jpg';
+      return `
+        <article class="instrument-card" data-id="${item.id}">
+          <img src="${img}" alt="${item.name}">
+          <div class="instrument-meta" style="flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:start">
+              <div>
+                <div class="title">${item.name}</div>
+                <div class="subtitle">${item.category || ''} ${item.model ? ' • ' + item.model : ''}</div>
+              </div>
+              <div><button class="btn btn--ghost btn-small btn-details">Details</button></div>
+            </div>
+            <div class="desc">${item.description || ''}</div>
+          </div>
+        </article>
+      `;
+    }
+
+    function render(list){
+      grid.innerHTML = '';
+      if(!list || !list.length){
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+      grid.innerHTML = list.map(cardHTML).join('');
+      // wire details buttons
+      grid.querySelectorAll('.btn-details').forEach(b => b.addEventListener('click', e => {
+        const article = e.target.closest('.instrument-card');
+        const id = article.getAttribute('data-id');
+        const item = INSTR.find(x=>String(x.id) === String(id));
+        openModal(item);
+      }));
+    }
+
+    // modal
+    function openModal(item){
+      modalRoot.innerHTML = `
+        <div class="modal-backdrop" role="dialog" aria-modal="true">
+          <div class="modal">
+            <div class="modal-header" style="display:flex;justify-content:space-between;">
+              <strong>${item.name}</strong>
+              <button id="closeModal" class="btn btn--ghost">Close</button>
+            </div>
+            <div class="modal-body">
+              <img src="${item.img || 'images/placeholder.jpg'}" alt="${item.name}">
+              <div>
+                <h3 style="margin-top:0">${item.model || ''} <span style="color:var(--muted); font-weight:600">${item.category || ''}</span></h3>
+                <p class="muted">${item.short || ''}</p>
+                <p style="margin:.4rem 0">${item.description || ''}</p>
+                ${item.datasheet ? `<p><a class="btn btn--primary" href="${item.datasheet}" target="_blank" rel="noopener">Download Datasheet</a></p>` : ''}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      modalRoot.style.display = 'block';
+      document.getElementById('closeModal').addEventListener('click', closeModal);
+      modalRoot.querySelector('.modal-backdrop').addEventListener('click', (ev)=> {
+        if(ev.target.classList.contains('modal-backdrop')) closeModal();
+      });
+    }
+    function closeModal(){ modalRoot.innerHTML=''; modalRoot.style.display='none'; }
+
+    function applyFilters(){
+      const q = (search.value||'').toLowerCase().trim();
+      const cat = (category.value||'all');
+
+      const filtered = INSTR.filter(i => {
+        const hay = [i.name,i.model,i.category,i.description].join(' ').toLowerCase();
+        const matchQ = q ? hay.indexOf(q) !== -1 : true;
+        const matchCat = cat === 'all' ? true : (String(i.category||'').toLowerCase().indexOf(cat.toLowerCase()) !== -1);
+        return matchQ && matchCat;
+      });
+
+      // Sort by name
+      filtered.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+      render(filtered);
+    }
+
+    // download JSON button
+    downloadBtn.addEventListener('click', ()=> {
+      const blob = new Blob([JSON.stringify(INSTR, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'instruments.json'; document.body.appendChild(a); a.click();
+      URL.revokeObjectURL(url); a.remove();
+    });
+
+    // fetch the data
+    fetch('data/instruments.json')
+      .then(r => r.ok ? r.json() : Promise.reject('no instruments'))
+      .then(json => {
+        INSTR = (json.instruments||[]).map((it, idx) => Object.assign({}, it, { id: it.id || idx+1 }));
+        applyFilters();
+      })
+      .catch(e => {
+        console.warn('instruments fetch failed', e);
+        grid.innerHTML = '<div class="muted">Could not load instruments (data/instruments.json).</div>';
+      });
+
+    // wire controls
+    search.addEventListener('input', applyFilters);
+    category.addEventListener('change', applyFilters);
+
+  })();
+  </script>
+</body>
+</html>

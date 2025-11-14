@@ -1,0 +1,334 @@
+{
+  "alumni": [
+    {
+      "name": "Viswas Sudhir  Chitale",
+      "type": "PhD",
+      "year": "2014",
+      "next": "Consultant, ICIMOD, Nepal",
+      "current": "Senior Programme Lead - Climate Resilience, Council on Energy, Environment and Water (CEEW)",
+      "img": "images/ViswasSudhirChitale.jfif"
+    },
+    {
+      "name": "Debabrata  Ray",
+      "type": "PhD",
+      "year": "2015",
+      "next": "Scientist, Rubber Research Institute of India, Min of Comm & Ind",
+      "current": "Regional Director, Rubber Research Institute of India, Min of Comm & Ind",
+      "img": "images/DebabrataRay.jfif"
+    },
+    {
+      "name": "Soumit Kumar  Behera",
+      "type": "PhD",
+      "year": "2016",
+      "next": "Scientist, CSIR-NBRI, Lucknow",
+      "current": "Sr. Pr. Scientist, CSIR-NBRI, Lucknow",
+      "img": "images/SoumitBehera.webp"
+    },
+    {
+      "name": "Narpati  Sharma",
+      "type": "PhD",
+      "year": "2016",
+      "next": "Scientist, DST, Sikkim",
+      "current": "Dy Director, DST, Sikkim",
+      "img": "images/NarpatiSharma.jpg"
+    },
+    {
+      "name": "Poonam Tripathi",
+      "type": "PhD",
+      "year": "2017",
+      "next": "Geospatial Training Analyst, ICIMOD, Nepal",
+      "current": "Geospatial Training Analyst, ICIMOD, Nepal",
+      "img": "images/PoonamTripathi.jpg"
+    },
+    {
+      "name": "Rajendra Mohan Panda",
+      "type": "PhD",
+      "year": "2018",
+      "next": "Post-Doc, Georgia State Univ., USA",
+      "current": "Post-Doc, Georgia State Univ., USA",
+      "img": "images/RajendraMohanPanda.jpg"
+    },
+    {
+      "name": "Shafique Matin",
+      "type": "PhD",
+      "year": "2019",
+      "next": "Manager, Teagasc, Ireland",
+      "current": "Centre In-Charge, MPSEDC",
+      "img": "images/ShafiqueMatin.png"
+    },
+    {
+      "name": "Swapna Mahanand",
+      "type": "PhD",
+      "year": "2019",
+      "next": "Post-Doc, Univ of Leipzig",
+      "current": "Post-Doc, Univ of Leipzig",
+      "img": "images/SwapnaMahanand.jpg"
+    },
+    {
+      "name": "Pulakesh Das",
+      "type": "PhD",
+      "year": "2019",
+      "next": "Faculty at Vidyasagar University",
+      "current": "Tech. Lead, MPSEDC",
+      "img": "images/PulakeshDas.jpg"
+    },
+    {
+      "name": "Sujit Madhav Ghosh",
+      "type": "PhD",
+      "year": "2020",
+      "next": "Scientist, ZeroCarbon, UK",
+      "current": "Scientist, NIKA.ECO, Singapore",
+      "img": "images/SujitMadhavGhosh.jpg"
+    },
+    {
+      "name": "Raj Kumar Singh",
+      "type": "PhD",
+      "year": "2023",
+      "next": "Scientist, CIFOR-ICRAF, Delhi",
+      "current": "Sr. Scientist, CIFOR-ICRAF, Delhi",
+      "img": "images/RajKumarSingh.jpg"
+    },
+    {
+      "name": "Roma Verghese",
+      "type": "PhD",
+      "year": "2024",
+      "next": "Proj. Scientist, IITM, PUNE",
+      "current": "Proj. Scientist, IITM, PUNE",
+      "img": "images/RomaVerghese.jpg"
+    },
+    {
+      "name": "Somanath Parimanik",
+      "type": "PhD",
+      "year": "2024",
+      "next": "Post-Doc, Univ of Southampton, UK",
+      "current": "Post-Doc, Univ of Southampton, UK",
+      "img": "images/SomanathParimanik.png"
+    },
+    {
+      "name": "Dr. K Subhasree",
+      "type": "Post-Doc",
+      "year": "-",
+      "next": "Asst. Prof., KL Univ. Amaravati",
+      "current": "Asst. Prof., SRM Univ. Amaravati",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Dr. MR Mahanta",
+      "type": "Post-Doc",
+      "year": "-",
+      "next": "Proj. Scientist, CIFOR-ICRAF, Delhi",
+      "current": "Asst. Prof., DD University, Odisha",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Dr. SM Ghosh",
+      "type": "Post-Doc",
+      "year": "-",
+      "next": "Scientist, ZeroCarbon, UK",
+      "current": "Scientist, NIKA.ECO, Singapore",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Dr. RM Panda",
+      "type": "Post-Doc",
+      "year": "-",
+      "next": "Post-Doc, Georgia State Univ., USA",
+      "current": "Post-Doc, Georgia State Univ., USA",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Dr. VS Pasha",
+      "type": "Post-Doc",
+      "year": "-",
+      "next": "Post-Doc, AIS, Bangalore",
+      "current": "Post-Doc, AIS, Bangalore",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Dushyant Kumar",
+      "type": "MTech",
+      "year": "-",
+      "next": "PhD, MPI, Germany",
+      "current": "Lead Environmental Data Scientist, Everimpact",
+      "img": "images/DushyantKumar.jfif"
+    },
+    {
+      "name": "Tarun Joseph",
+      "type": "MTech",
+      "year": "-",
+      "next": "Post Graduate Diploma Officer Trainee, Indian Institute of Remote Sensing (IIRS)",
+      "current": "Principal Meteorologist, Fyllo",
+      "img": "images/TarunJoseph.jfif"
+    },
+    {
+      "name": "Nirupam Som",
+      "type": "MTech",
+      "year": "-",
+      "next": "Teacher, Govt College., WB",
+      "current": "Teacher, Govt College., WB",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Soumik Mandal",
+      "type": "MTech",
+      "year": "-",
+      "next": "NHPC Limited",
+      "current": "Deputy Manager at NHPC Limited",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Ravi Pratap Singh",
+      "type": "MTech",
+      "year": "-",
+      "next": "CDS Cadet, Indian ARMY",
+      "current": "CDS Cadet, Indian ARMY",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "S. Paramanik",
+      "type": "MTech",
+      "year": "-",
+      "next": "PhD, CORAL",
+      "current": "Post-Doc, Univ of Southampton, UK",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Sakshi Saraf",
+      "type": "MTech",
+      "year": "-",
+      "next": "Proj Fellow, IIT Roorkee",
+      "current": "PhD, Univ of South Dakota",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Priyankar Kumar",
+      "type": "MTech",
+      "year": "-",
+      "next": "PhD, CORAL",
+      "current": "PhD, CORAL",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Sukanta Malakar",
+      "type": "MTech",
+      "year": "-",
+      "next": "PhD, CORAL",
+      "current": "Faculty, Adamas University",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Ankit Shekhar",
+      "type": "MTech",
+      "year": "-",
+      "next": "PhD, ETH, Zurich, Switzerland",
+      "current": "Asst. Prof., AgFE, IIT Kgp",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Suraj Oran",
+      "type": "MTech",
+      "year": "-",
+      "next": "Quality Control Engineer & Technical Inspector, Ministry of Defence,  Government of India",
+      "current": "Assistant Engineer, Government of Jharkhand",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Amrit Hanse",
+      "type": "MTech",
+      "year": "-",
+      "next": "No INFO",
+      "current": "No INFO",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Pringale Kumar Das",
+      "type": "MTech",
+      "year": "-",
+      "next": "Associate Data Scientist, Corteva Agriscience",
+      "current": "Data Scientist, Corteva Agriscience",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Parthiva Shome",
+      "type": "MTech",
+      "year": "-",
+      "next": "Placement through CDC",
+      "current": "Sr. Manager, Intelligence Unit, Bandhan Bank",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Shon Ravindra Bakal",
+      "type": "MTech",
+      "year": "-",
+      "next": "Preparing for PSU jobs",
+      "current": "Preparing for PSU jobs",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Ranit Singha Roy",
+      "type": "MTech",
+      "year": "-",
+      "next": "ECEOS Sdn. Bhd, KL, Malaysia",
+      "current": "ECEOS Sdn. Bhd, KL, Malaysia",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Shanu Shekhar",
+      "type": "MTech",
+      "year": "-",
+      "next": "Preparing for PSU jobs",
+      "current": "Preparing for PSU jobs",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Amitesh Ray",
+      "type": "MTech",
+      "year": "-",
+      "next": "Preparing for PSU jobs",
+      "current": "Preparing for PSU jobs",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Sugali Sravan Naik",
+      "type": "MTech",
+      "year": "-",
+      "next": "Proj. coordinator, Haritika, Centre for Rural Development Mahoba Road Nowgong, MP, India",
+      "current": "Proj. coordinator, Haritika, Centre for Rural Development Mahoba Road Nowgong, MP, India",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Saritha PG",
+      "type": "MTech",
+      "year": "-",
+      "next": "PhD., Univ of Melborne, Australia",
+      "current": "Post Doc, University of Tokyo",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Sujoy Mudi",
+      "type": "MS",
+      "year": "-",
+      "next": "Leader, BeZero Carbon, UK",
+      "current": "Leader, BeZero Carbon, UK",
+      "img": "images/nodata.jpg"
+    },
+    {
+      "name": "Moarenla Longkumer",
+      "type": "M.Tech",
+      "year": "2024",
+      "img": "images/moarenlaylongkumer.jpg"
+    },    
+    {
+      "name": "Thejshri",
+      "type": "M.Tech",
+      "year": "2024",
+      "img": "images/thejshri.jpg"
+    },    
+    {
+      "name": "Yatendra Singh",
+      "type": "M.Tech",
+      "year": "2024",
+      "img": "images/yatendrasingh.jpg"
+    }     
+  ]
+}

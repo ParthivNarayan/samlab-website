@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>People — SAM Lab (Team & Alumni)</title>
+
+  <link rel="icon" href="images/favicon.png">
+  <meta name="theme-color" content="#003366">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="scripts.js" defer></script>
+
+  <style>
+    /* Scoped styles for People page (keeps your color scheme) */
+    .people-section { margin-top: 2rem; margin-bottom: 2rem; }
+    .people-section .section-head { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; margin-bottom:0.6rem; }
+    .people-section h2 { margin:0; font-size:1.2rem; color:var(--blue-900); font-weight:700; }
+    .people-section .source-label { font-size:.9rem; color:var(--muted); }
+    .tag-count { color:var(--muted); font-weight:600; font-size:.95rem; }
+
+    .people-grid { display: grid; grid-template-columns: 1fr; gap: 0.9rem; align-items: start; width:100%; }
+
+    .team-card {
+      width: 100%;
+      margin: 0;
+      display: flex;
+      gap: 1rem;
+      padding: 0.95rem;
+      align-items: flex-start;
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 4px 10px rgba(2,6,23,0.03);
+    }
+    .team-card img { width:112px; height:112px; object-fit:cover; border-radius:8px; border:1px solid rgba(0,0,0,0.04); flex-shrink:0; }
+    .team-card .meta { flex:1; }
+    .team-card .name { font-weight:700; color:var(--blue-900); font-size:1.02rem; margin-bottom:0.12rem; }
+    .team-card .role { font-weight:600; color:var(--muted); margin-bottom:0.4rem; }
+    .team-card .bio { color:var(--ink); line-height:1.4; font-size:.95rem; }
+
+    .subsection { margin-bottom: 1rem; }
+    .subsection h3 { margin:0 0 0.45rem 0; font-size:1rem; color:var(--blue-900); font-weight:600; display:flex; align-items:center; gap:.6rem; }
+
+    .small-muted { font-size:.85rem; color:var(--muted); margin-top:.45rem; }
+
+    .toolbar { display:flex; gap:.6rem; align-items:center; margin-bottom:1rem; }
+    .toolbar .input, .toolbar .select { min-height:40px; padding:.5rem .65rem; border-radius:8px; }
+
+    /* Toggle button for alumni */
+    .alumni-toggle {
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: .35rem .6rem;
+      border-radius: 8px;
+      font-weight:700;
+      cursor:pointer;
+      color:var(--blue-900);
+    }
+    .alumni-toggle[aria-expanded="true"] {
+      background: rgba(26,137,214,0.07);
+      border-color: rgba(26,137,214,0.18);
+      color: var(--blue-900);
+    }
+
+    .alumni-grid { overflow:hidden; transition: max-height .35s ease, opacity .25s ease; }
+    .alumni-grid.hidden { max-height: 0; opacity: 0; pointer-events: none; }
+    .alumni-grid.visible { max-height: 2000px; opacity: 1; pointer-events: auto; }
+
+    /* Lab Director special header */
+    .lab-director .section-head { align-items:center; }
+    .lab-director .director-meta { display:flex; flex-direction:column; gap:.15rem; }
+
+    @media (min-width:1200px){ .page-people .container { max-width:1100px } }
+    @media (max-width:900px){
+      .team-card { gap:.7rem; }
+      .team-card img { width:96px; height:96px; }
+    }
+  </style>
+</head>
+<body class="page-people">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand"><img class="brand-logo" src="images/samlab-logo.png" alt="SAM Lab Logo" /></a>
+      <nav class="main-nav" aria-label="Primary">
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <ul id="nav-links" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="abouts.html">About</a></li>
+          <li><a href="team.html" class="active">People</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="instruments.html">Instruments</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="subhero">
+    <div class="container">
+      <h1>SAM Lab — People</h1>
+      <p class="muted">Professors, Post-docs, PhD scholars, MTech students, project fellows and interns — current and former.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="toolbar" style="margin-bottom:1rem;">
+        <input id="peopleSearch" class="input" type="search" placeholder="Search name, role, affiliation, or keywords…" />
+        <select id="peopleRoleFilter" class="select" aria-label="Filter by role">
+          <option value="all">All roles</option>
+          <option value="Professor">Professor</option>
+          <option value="Post-Doc">Post-Doc</option>
+          <option value="PhD Scholar">PhD Scholar</option>
+          <option value="MTech">MTech</option>
+          <option value="Project Fellow">Project Fellow</option>
+          <option value="Intern">Intern</option>
+        </select>
+        <label style="margin-left:auto" class="source-label">Showing: <strong id="peopleSource">Team + Alumni</strong></label>
+      </div>
+
+      <div id="peopleContainer"></div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container"><p>&copy; 2025 SAM Lab, CORAL, IIT Kharagpur, India</p></div>
+  </footer>
+
+  <!-- embedded team data -->
+  <script type="application/json" id="team-data">
+  {
+    "members": [
+      {
+        "name": "Prof. Mukunda Dev Behera",
+        "role": "Professor",
+        "email": "mdbehera@coral.iitkgp.ac.in",
+        "img": "images/mdbehera.jpg",
+        "bio": "Leads SAM Lab’s research in natural resources and ecological climatology, integrating geospatial technologies, carbon accounting, and nature-based solutions."
+      },
+      {
+        "name": "Mr. Jaya Prakash",
+        "role": "Ph.D. Scholar",
+        "email": "jpcoral@iitkgp.ac.in",
+        "img": "images/jayaprakash.jpg",
+        "bio": "Works on vegetation phenology and biomass modelling using microwave remote sensing."
+      },
+      {
+        "name": "Mr. Jagadish Buddolla",
+        "role": "Ph.D. Scholar",
+        "email": "jagadishjsu@gmail.com",
+        "img": "images/jagadishbuddolla.jpg",
+        "bio": "Focuses on the Asian carbon cycle using satellite observations and causal discovery."
+      },
+      {
+        "name": "Mr. Abhishek Kashyap",
+        "role": "Ph.D. Scholar",
+        "email": "kashyap95abhishek@gmail.com",
+        "img": "images/abhishekkashyap.jpg",
+        "bio": "Studies geomorphology and extreme events through landscape evaluation models."
+      },
+      {
+        "name": "Mr. Vikramjeet Singh",
+        "role": "Ph.D. Scholar",
+        "email": "vikramjeet365@gmail.com",
+        "img": "images/vikramjeetsingh.jpg",
+        "bio": "Researches vegetation–atmosphere interactions and LiDAR remote sensing."
+      },
+      {
+        "name": "Mr. Mainak Mukhopadhyay",
+        "role": "Ph.D. Scholar",
+        "email": "mainakmukhopadhyay97@gmail.com",
+        "img": "images/mainakmukhopadhyay.jpg",
+        "bio": "Works on vegetation phenology and biomass modelling using microwave data."
+      },
+      {
+        "name": "Mr. Ritikesh Maurya",
+        "role": "Ph.D. Scholar",
+        "email": "ritikesh999@gmail.com",
+        "img": "images/ritikeshmaurya.jpg",
+        "bio": "Investigates forest hydrology through remote sensing."
+      },
+      {
+        "name": "Ms. Meenakshi Behera",
+        "role": "Ph.D. Scholar",
+        "email": "meena.behera143@gmail.com",
+        "img": "images/meenabehera.jpg",
+        "bio": "Studies natural hazards and environmental modelling."
+      },
+      {
+        "name": "Mr. Wankhede Mahendra Pandhari",
+        "role": "Ph.D. Scholar",
+        "email": "--@gmail.com",
+        "img": "images/nodata.jpg",
+        "bio": "Forest functioning and AI."
+      },
+      {
+        "name": "Ms. Manisha Rani Sahu",
+        "role": "Junior Research Fellow",
+        "email": "barshamanisha905@gmail.com",
+        "img": "images/barshamanisha.jpg",
+        "bio": "Researches forest biomass and measurement & modelling studies."
+      },
+      {
+        "name": "Mr. Sumit Kumar",
+        "role": "Junior Research Fellow",
+        "email": "sumit.kumar.124096@gmail.com",
+        "img": "images/sumitkumar.jpg",
+        "bio": "Focuses on LULC change analysis and SAR feature extraction."
+      },
+      {
+        "name": "Mr. Biplab Das",
+        "role": "Junior Research Fellow",
+        "email": "biplabrsg@gmail.com",
+        "img": "images/BiplabDas.jpg",
+        "bio": "Analyzes remote sensing datasets and builds geospatial monitoring pipelines."
+      },
+      {
+        "name": "Mr. Parthiv Narayan",
+        "role": "Junior Research Fellow",
+        "email": "parthiviirspractical@gmail.com",
+        "img": "images/parthiv.jpg",
+        "bio": "Analyzes influence of vegetation on Indian Summer Monsoon using neural networks."
+      },
+      {
+        "name": "Mr. Boda Vinesh",
+        "role": "M.Tech Student",
+        "email": "vineshcoral@gmail.com",
+        "img": "images/BodaVinesh.jpg",
+        "bio": "."
+      }
+    ]
+  }
+  </script>
+
+  <script>
+  (function(){
+    const SECTIONS = ["Professor","Post-Doc","PhD Scholar","MTech","Project Fellow","Intern"];
+    const ROLE_MAP = {
+      "leader":"Professor","professor":"Professor","faculty":"Professor","principal investigator":"Professor","pi":"Professor",
+      "post-doc":"Post-Doc","postdoc":"Post-Doc","research associate":"Post-Doc","post doctoral":"Post-Doc",
+      "ph.d. scholar":"PhD Scholar","ph.d scholar":"PhD Scholar","phd scholar":"PhD Scholar","phd":"PhD Scholar",
+      "m.tech student":"MTech","m.tech":"MTech","mtech":"MTech","ms":"MTech",
+      "junior research fellow":"Project Fellow","jrf":"Project Fellow","project fellow":"Project Fellow","research fellow":"Project Fellow","research assistant":"Project Fellow",
+      "intern":"Intern","internship":"Intern","student":"Intern"
+    };
+
+    function normalizeRole(str){
+      if(!str) return "";
+      const s = String(str).trim().toLowerCase();
+      if (ROLE_MAP[s]) return ROLE_MAP[s];
+      for (const k in ROLE_MAP) if (s.indexOf(k)!==-1) return ROLE_MAP[k];
+      if (s.includes("phd")||s.includes("ph.d")) return "PhD Scholar";
+      if (s.includes("mtech")||s.includes("m.tech")||s.includes("ms")) return "MTech";
+      if (s.includes("post")&&s.includes("doc")) return "Post-Doc";
+      if (s.includes("prof")||s.includes("dr.")) return "Professor";
+      if (s.includes("intern")) return "Intern";
+      if (s.includes("jrf")||s.includes("research")) return "Project Fellow";
+      return "";
+    }
+
+    // parse embedded team
+    const teamScript = document.getElementById('team-data');
+    let teamMembers = [];
+    try {
+      const t = JSON.parse(teamScript.textContent || '{}');
+      teamMembers = (t.members || []).map(m => Object.assign({}, m, { source: 'team' }));
+    } catch(e) { console.warn('team-data parse error', e); }
+
+    // fetch alumni.json
+    const fetchAlumni = fetch('data/alumni.json')
+      .then(r => r.ok ? r.json() : Promise.reject('data/alumni.json not found'))
+      .then(j => (j.alumni || []).map(a => ({
+        name: a.name || '',
+        role: (a.type || '').trim(),
+        year: a.year || '',
+        next: a.next || '',
+        current: a.current || '',
+        img: a.img || 'images/placeholder.jpg',
+        source: 'alumni'
+      })))
+      .catch(e => { console.warn('alumni fetch error', e); return []; });
+
+    Promise.all([fetchAlumni]).then(results => {
+      const alumni = results[0] || [];
+      const combined = teamMembers.concat(alumni);
+
+      combined.forEach(p => {
+        p.canonical = normalizeRole(p.role);
+        let y = p.year || "";
+        if (!y && p.source === 'team' && p.role && p.role.match(/\b20\d{2}\b/)) {
+          y = (p.role.match(/\b20\d{2}\b/)||[''])[0];
+        }
+        p._yearNum = parseInt(String(y||'').replace(/\D/g,'')) || 0;
+      });
+
+      // bucket
+      const sections = {}; SECTIONS.forEach(s=>sections[s]=[]);
+      const unknown = [];
+      combined.forEach(p => { if (sections[p.canonical]) sections[p.canonical].push(p); else unknown.push(p); });
+
+      // sort
+      for (const k in sections){
+        sections[k].sort((a,b) => {
+          if (b._yearNum !== a._yearNum) return b._yearNum - a._yearNum;
+          return (a.name||'').localeCompare(b.name||'');
+        });
+      }
+      unknown.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+
+      // render
+      const container = document.getElementById('peopleContainer');
+      container.innerHTML = '';
+
+      SECTIONS.forEach(sec => {
+        const arr = sections[sec] || [];
+
+        // For Professor: make it Lab Director (no subsections, no counts)
+        if (sec === 'Professor') {
+          // find only current team members who map to Professor
+          const currentProf = arr.filter(p => p.source === 'team');
+          if (!currentProf.length) return;
+
+          const block = document.createElement('div');
+          block.className = 'people-section card lab-director';
+          block.innerHTML = `
+            <div class="section-head">
+              <div class="director-meta">
+                <h2>Lab Director</h2>
+              </div>
+            </div>
+            <div class="people-grid" data-grid="lab-director"></div>
+          `;
+          container.appendChild(block);
+          const grid = block.querySelector('[data-grid="lab-director"]');
+          currentProf.forEach(p => grid.appendChild(buildPersonCard(p, sec, false)));
+          return;
+        }
+
+        // for other sections: render Current + (collapsible) Alumni
+        if (!arr.length) return; // skip empty
+
+        const current = arr.filter(p => p.source === 'team');
+        const alumniGroup = arr.filter(p => p.source === 'alumni');
+
+        const block = document.createElement('div');
+        block.className = 'people-section card';
+        block.dataset.section = sec;
+
+        block.innerHTML = `
+          <div class="section-head">
+            <div>
+              <h2>${sec}</h2>
+              <div class="source-label">Total: <span class="tag-count">${arr.length}</span></div>
+            </div>
+            <div>
+              <!-- toggle will be inserted by JS below -->
+            </div>
+          </div>
+
+          <div class="subsection">
+            <h3>Current Members</h3>
+            <div class="people-grid" data-grid="current-${sec.replace(/\s+/g,'-')}"></div>
+          </div>
+
+          <div class="subsection">
+            <h3>
+              Alumni
+              <button class="alumni-toggle" aria-expanded="false" aria-controls="alumni-${sec.replace(/\s+/g,'-')}" style="margin-left: 0.6rem;">Show Alumni (${alumniGroup.length})</button>
+            </h3>
+            <div class="alumni-grid hidden" id="alumni-${sec.replace(/\s+/g,'-')}" data-grid="alumni-${sec.replace(/\s+/g,'-')}"></div>
+          </div>
+        `;
+        container.appendChild(block);
+
+        const gridCurrent = block.querySelector(`[data-grid="current-${sec.replace(/\s+/g,'-')}"]`);
+        const gridAlumni = block.querySelector(`#alumni-${sec.replace(/\s+/g,'-')}`);
+
+        // helper to build card; reused
+        function buildPersonCard(p, sectionLabel, showYear=false){
+          const yearText = showYear && p._yearNum ? ` • ${p._yearNum}` : '';
+          const info = p.source === 'alumni'
+            ? `<div class="small-muted">${p.next ? `<strong>Leap from SAMLab:</strong> ${p.next}` : ''}${p.current ? `<br><strong>Current Affiliation:</strong> ${p.current}` : ''}</div>`
+            : `<div class="small-muted">${p.bio || ""}</div>`;
+          const img = p.img || 'images/placeholder.jpg';
+
+          const div = document.createElement('div');
+          div.className = 'team-card';
+          div.innerHTML = `
+            <img src="${img}" alt="${p.name}">
+            <div class="meta">
+              <div class="name">${p.name}</div>
+              <div class="role">${sectionLabel}${yearText}</div>
+              ${info}
+            </div>
+          `;
+          return div;
+        }
+
+        // append current visible
+        current.forEach(p => gridCurrent.appendChild(buildPersonCard(p, sec, false)));
+        // append alumni inside alumni grid (initially hidden)
+        alumniGroup.forEach(p => gridAlumni.appendChild(buildPersonCard(p, sec, true)));
+
+        // wire toggle button
+        const toggleBtn = block.querySelector('.alumni-toggle');
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', () => {
+            const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+            if (expanded) {
+              // hide
+              toggleBtn.setAttribute('aria-expanded','false');
+              toggleBtn.textContent = `Show Alumni (${alumniGroup.length})`;
+              gridAlumni.classList.remove('visible');
+              gridAlumni.classList.add('hidden');
+            } else {
+              // show
+              toggleBtn.setAttribute('aria-expanded','true');
+              toggleBtn.textContent = `Hide Alumni (${alumniGroup.length})`;
+              gridAlumni.classList.remove('hidden');
+              gridAlumni.classList.add('visible');
+            }
+          });
+        }
+      });
+
+      // render unknowns if any
+      if (unknown.length){
+        const block = document.createElement('div');
+        block.className = 'people-section card';
+        block.innerHTML = `<div class="section-head"><h2>Other / Unclassified</h2><div class="source-label">Count: <span class="tag-count">${unknown.length}</span></div></div><div class="people-grid"></div>`;
+        container.appendChild(block);
+        const g = block.querySelector('.people-grid');
+        unknown.forEach(p => {
+          const div = document.createElement('div');
+          div.className = 'team-card';
+          div.innerHTML = `<img src="${p.img||'images/placeholder.jpg'}" alt="${p.name}"><div class="meta"><div class="name">${p.name}</div><div class="role">${p.role||''}</div><div class="small-muted">${p.bio || p.next || p.current || ''}</div></div>`;
+          g.appendChild(div);
+        });
+      }
+
+      // SEARCH + ROLE FILTER
+      const searchEl = document.getElementById('peopleSearch');
+      const filterEl = document.getElementById('peopleRoleFilter');
+
+      function applyFilters(){
+        const q = (searchEl?.value || '').toLowerCase().trim();
+        const roleSel = (filterEl?.value || 'all');
+
+        document.querySelectorAll('#peopleContainer .team-card').forEach(card => {
+          const text = (card.innerText || '').toLowerCase();
+          const matchesQuery = q ? text.indexOf(q) !== -1 : true;
+          const roleText = card.querySelector('.role')?.innerText || '';
+          const matchesRole = (roleSel === 'all') ? true : roleText.indexOf(roleSel) !== -1;
+          card.style.display = (matchesQuery && matchesRole) ? '' : 'none';
+        });
+
+        // hide entire subsections/sections with no visible cards
+        document.querySelectorAll('#peopleContainer .people-section').forEach(section => {
+          const anyVisible = Array.from(section.querySelectorAll('.team-card')).some(c => c.style.display !== 'none');
+          section.style.display = anyVisible ? '' : 'none';
+        });
+      }
+
+      if (searchEl) searchEl.addEventListener('input', applyFilters);
+      if (filterEl) filterEl.addEventListener('change', applyFilters);
+
+    }).catch(err => {
+      console.error('Error rendering people:', err);
+      const container = document.getElementById('peopleContainer');
+      container.innerHTML = '<div class="muted">Could not load people data.</div>';
+    });
+
+  })();
+  </script>
+
+</body>
+</html>

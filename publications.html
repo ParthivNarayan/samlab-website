@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Publications — SAM Lab</title>
+
+  <link rel="icon" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/favicon.png">
+  <meta name="theme-color" content="#003366">
+
+  <meta property="og:title" content="SAM Lab — IIT Kharagpur">
+  <meta property="og:description" content="Geospatial intelligence for climate, ecology, and sustainable resource management.">
+  <meta property="og:image" content="images/hero_forest.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="scripts.js" defer></script>
+
+  <style>
+    /* small local styles (keeps your color palette) */
+    .pubs-grid { display: grid; gap: 1rem; }
+    .pub-card { padding: 1rem; border-radius: 10px; background:#fff; border:1px solid rgba(0,0,0,.06); box-shadow:0 3px 8px rgba(2,6,23,.03); }
+    .pub-list { list-style: none; margin:0; padding:0; display:grid; gap:.6rem; }
+    .pub-item { padding:.65rem; border-radius:8px; display:flex; gap:.8rem; align-items:flex-start; }
+    .pub-item .meta { flex:1; }
+    .pub-item .title { font-weight:700; color:var(--blue-900); margin-bottom:.15rem; }
+    .pub-item .venue { color:var(--muted); font-weight:600; margin-bottom:.2rem; }
+    .pub-item .note { color:var(--muted); font-size:.9rem; }
+    .toolbar { display:flex; gap:.6rem; align-items:center; margin-bottom:1rem; }
+    .toolbar .input { flex:1; min-height:42px; padding:.5rem .75rem; border-radius:8px; }
+    .btn { display:inline-block; padding:.45rem .7rem; border-radius:8px; text-decoration:none; font-weight:700; }
+    .btn-primary { background:var(--blue-900); color:#fff; border:0; }
+    .btn-ghost { background:transparent; border:1px solid rgba(0,0,0,.06); color:var(--blue-900); }
+    .loadmore-wrap { text-align:center; margin-top:.75rem; }
+    .muted-small { color:var(--muted); font-size:.95rem; margin-top:.4rem; }
+    @media (max-width:900px){ .pub-item{ flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <img class="brand-logo" src="images/samlab-logo.png" alt="SAM Lab Logo" />
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul id="nav-links" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="abouts.html">About</a></li>
+          <li><a href="team.html">People</a></li>
+          <li><a href="publications.html" class="active">Publications</a></li>
+          <li><a href="instruments.html">Instruments</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="subhero">
+    <div class="container">
+      <h1>Publications</h1>
+      <p class="muted">Top-cited works and recent outputs from SAM Lab.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="toolbar">
+        <input id="pubSearch" class="input" type="search" placeholder="Search title, year, or journal…" aria-label="Search publications" />
+        <a id="exportRecent" class="btn btn-ghost" title="Download visible recent publications (JSON)">Export Visible (JSON)</a>
+      </div>
+
+      <div class="pubs-grid">
+        <div class="pub-card" id="topCard">
+          <h2 class="section-title">Top Cited</h2>
+          <ol id="topList" class="pub-list" aria-live="polite"></ol>
+          <!-- <p class="muted-small">Curated from your “Top” list; links and venues preserved.</p> -->
+        </div>
+
+        <div class="pub-card" id="recentCard">
+          <h2 class="section-title">Recent Publications</h2>
+          <div id="recentListContainer">
+            <ol id="recentList" class="pub-list" aria-live="polite"></ol>
+          </div>
+          <div class="loadmore-wrap">
+            <button id="loadMoreBtn" class="btn btn-primary">Load more (10)</button>
+          </div>
+          <p class="muted-small">Showing <span id="recentShowing">0</span> of <span id="recentTotal">0</span> recent publications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 SAM Lab, CORAL, IIT Kharagpur.</p>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    // Helpers
+    function findArrayRoot(obj){
+      // find first array value in object (handles keys "top","recent","publications", etc.)
+      for (const k in obj){ if (Array.isArray(obj[k])) return obj[k]; }
+      return null;
+    }
+
+    function createListItem(pub){
+      const title = pub.title || 'Untitled';
+      const venue = pub.venue ? `<div class="venue">${pub.venue} • ${pub.year || ''}</div>` : `<div class="venue">${pub.year || ''}</div>`;
+      const note = pub.note ? `<div class="note">${pub.note}</div>` : '';
+      const link = pub.link ? `<a class="btn btn-ghost" href="${pub.link}" target="_blank" rel="noopener">View</a>` : '';
+      const html = document.createElement('li');
+      html.className = 'pub-item';
+      html.innerHTML = `
+        <div class="meta">
+          <div class="title">${title}</div>
+          ${venue}
+          ${note}
+        </div>
+        <div class="actions">${link}</div>
+      `;
+      return html;
+    }
+
+    // DOM refs
+    const topListEl = document.getElementById('topList');
+    const recentListEl = document.getElementById('recentList');
+    const recentTotalEl = document.getElementById('recentTotal');
+    const recentShowingEl = document.getElementById('recentShowing');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const pubSearch = document.getElementById('pubSearch');
+    const exportBtn = document.getElementById('exportRecent');
+
+    // Data holders
+    let TOP_PUBS = [];
+    let RECENT_PUBS = [];       // full sorted array
+    let recentVisibleCount = 10; // initial
+    const INCREMENT = 10;
+
+    // Fetch both files (try to be tolerant of different JSON keys)
+    Promise.all([
+      fetch('data/top_publications.json').then(r => r.ok ? r.json() : Promise.resolve({})).catch(()=> ({})),
+      fetch('data/recent_publications.json').then(r => r.ok ? r.json() : Promise.resolve({})).catch(()=> ({}))
+    ]).then(([topJson, recentJson]) => {
+      TOP_PUBS = findArrayRoot(topJson) || [];
+      RECENT_PUBS = findArrayRoot(recentJson) || [];
+
+      // sanitize year to number where possible
+      RECENT_PUBS = RECENT_PUBS.map(p => Object.assign({}, p, { yearNum: parseInt((p.year||'').toString().match(/-?\d+/)?.[0]||'0',10) || 0 }));
+
+      // sort recent by year descending, then by title
+      RECENT_PUBS.sort((a,b) => {
+        if ((b.yearNum||0) !== (a.yearNum||0)) return (b.yearNum||0) - (a.yearNum||0);
+        return (a.title||'').localeCompare(b.title||'');
+      });
+
+      renderTop(TOP_PUBS);
+      renderRecent(); // uses RECENT_PUBS & recentVisibleCount
+
+      // update counts
+      recentTotalEl.textContent = RECENT_PUBS.length;
+      recentShowingEl.textContent = Math.min(recentVisibleCount, RECENT_PUBS.length);
+      if (RECENT_PUBS.length <= recentVisibleCount) loadMoreBtn.style.display = 'none';
+    }).catch(err => {
+      console.error('Error loading publications:', err);
+      topListEl.innerHTML = '<li class="muted">Could not load top publications.</li>';
+      recentListEl.innerHTML = '<li class="muted">Could not load recent publications.</li>';
+      loadMoreBtn.style.display = 'none';
+    });
+
+    // Rendering functions
+    function renderTop(list){
+      topListEl.innerHTML = '';
+      if (!list || !list.length) {
+        topListEl.innerHTML = '<li class="muted">No top publications found.</li>';
+        return;
+      }
+      list.forEach(pub => {
+        const li = createListItem(pub);
+        topListEl.appendChild(li);
+      });
+    }
+
+    function renderRecent(filtered){
+      // filtered optional: if provided, use filtered array; else use RECENT_PUBS
+      const source = Array.isArray(filtered) ? filtered : RECENT_PUBS;
+      const total = source.length;
+      const visible = Math.min(recentVisibleCount, total);
+
+      recentListEl.innerHTML = '';
+      if (!total){
+        recentListEl.innerHTML = '<li class="muted">No recent publications found.</li>';
+        recentShowingEl.textContent = 0;
+        recentTotalEl.textContent = 0;
+        loadMoreBtn.style.display = 'none';
+        return;
+      }
+
+      // add first `visible` items
+      for (let i=0;i<visible;i++){
+        const pub = source[i];
+        if (!pub) continue;
+        const li = createListItem(pub);
+        recentListEl.appendChild(li);
+      }
+
+      // update controls
+      recentShowingEl.textContent = visible;
+      recentTotalEl.textContent = total;
+      if (visible >= total) loadMoreBtn.style.display = 'none';
+      else loadMoreBtn.style.display = '';
+    }
+
+    // Search logic (filters both top & recent; recent paginated)
+    function applySearch(){
+      const q = (pubSearch.value || '').toLowerCase().trim();
+      // filter top -> render full matches
+      const filteredTop = TOP_PUBS.filter(p => {
+        const hay = `${p.title||''} ${p.venue||''} ${p.year||''} ${p.note||''}`.toLowerCase();
+        return q ? hay.indexOf(q) !== -1 : true;
+      });
+      renderTop(filteredTop);
+
+      // filter recent
+      const filteredRecent = RECENT_PUBS.filter(p => {
+        const hay = `${p.title||''} ${p.venue||''} ${p.year||''} ${p.note||''}`.toLowerCase();
+        return q ? hay.indexOf(q) !== -1 : true;
+      });
+
+      // if fewer than visibleCount results, show them all; else paginate
+      if (filteredRecent.length <= recentVisibleCount){
+        renderRecent(filteredRecent);
+      } else {
+        // show first recentVisibleCount of filteredRecent
+        recentListEl.innerHTML = '';
+        for (let i=0;i<Math.min(recentVisibleCount, filteredRecent.length); i++){
+          recentListEl.appendChild(createListItem(filteredRecent[i]));
+        }
+        recentShowingEl.textContent = Math.min(recentVisibleCount, filteredRecent.length);
+        recentTotalEl.textContent = filteredRecent.length;
+        loadMoreBtn.style.display = filteredRecent.length > recentVisibleCount ? '' : 'none';
+        // store current filtered set for load more
+        currentFilteredRecent = filteredRecent;
+      }
+      // store current filtered set globally for load-more
+      currentFilteredRecent = filteredRecent;
+    }
+
+    // state for filtered recent (used when search active)
+    let currentFilteredRecent = null;
+
+    // Load more handler
+    loadMoreBtn.addEventListener('click', () => {
+      // increment visible count by INCREMENT
+      recentVisibleCount += INCREMENT;
+      // if search filter active we should use filteredRecent else RECENT_PUBS
+      const source = Array.isArray(currentFilteredRecent) ? currentFilteredRecent : RECENT_PUBS;
+      // re-render using source
+      recentListEl.innerHTML = '';
+      const visible = Math.min(recentVisibleCount, source.length);
+      for (let i=0;i<visible;i++){
+        recentListEl.appendChild(createListItem(source[i]));
+      }
+      recentShowingEl.textContent = visible;
+      recentTotalEl.textContent = source.length;
+      if (visible >= source.length) loadMoreBtn.style.display = 'none';
+    });
+
+    // Export visible recent -> JSON
+    exportBtn.addEventListener('click', () => {
+      const source = Array.isArray(currentFilteredRecent) ? currentFilteredRecent : RECENT_PUBS;
+      const visible = Math.min(recentVisibleCount, source.length);
+      const payload = source.slice(0, visible);
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'recent_publications_visible.json'; document.body.appendChild(a); a.click();
+      URL.revokeObjectURL(url); a.remove();
+    });
+
+    // wire search
+    pubSearch.addEventListener('input', () => {
+      // when user types, reset visibleCount to initial (so search shows top 10)
+      recentVisibleCount = INCREMENT;
+      applySearch();
+    });
+
+  })();
+  </script>
+</body>
+</html>

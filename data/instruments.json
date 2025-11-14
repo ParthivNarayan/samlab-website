@@ -1,0 +1,67 @@
+{
+  "instruments": [
+    {
+      "id": 1,
+      "name": "LAI-2200C Plant Canopy Analyzer (LI-COR Environmental)",
+      "model": "LAI-2200C",
+      "category": "Lab Analysis",
+      "description": "Optical instrument for measuring Leaf Area Index (LAI) and canopy structure using canopy gap fraction and radiation measurements.",
+      "short": "Measures Leaf Area Index and canopy structure.",
+      "img": "images/LAI-2200CPlantCanopyAnalyzer.jpg"
+    },
+    {
+      "id": 2,
+      "name": "SPAD-502 Chlorophyll Meter",
+      "model": "SPAD-502",
+      "category": "Lab Analysis",
+      "description": "Handheld chlorophyll meter providing rapid SPAD readings to estimate leaf chlorophyll content and plant health in the field.",
+      "short": "Handheld chlorophyll (SPAD) meter for leaf chlorophyll content.",
+      "img": "images/SPADChlorophyllMeter.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Phenomet Tower",
+      "model": "Custom Phenomet Tower",
+      "category": "Field Equipment",
+      "description": "A field-deployed tower mounting sensors (NDVI, PAR, temperature/humidity) for continuous phenology observations and canopy monitoring.",
+      "short": "Field tower for continuous phenology & canopy observations.",
+      "img": "images/Pheno-meteorologicalTower.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Terrestrial LiDAR Scanner (TLS)",
+      "model": "RIEGLTLSVZ-400i",
+      "category": "Remote Sensing",
+      "description": "High-resolution ground-based LiDAR scanner for 3D canopy and terrain mapping, structural analysis, and biomass estimation.",
+      "short": "Ground-based LiDAR for 3D canopy & terrain mapping.",
+      "img": "images/RIEGLTLSVZ-400i.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Laser Range Finder",
+      "model": "Handheld LRF",
+      "category": "Field Equipment",
+      "description": "Portable laser distance meter for accurate distance and slope measurements during field surveys.",
+      "short": "Handheld laser distance meter for field measurements.",
+      "img": "images/NikonLaserRangeFinder.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Handheld GPS (Survey)",
+      "model": "Handheld GPS",
+      "category": "Field Equipment",
+      "description": "Handheld GPS unit used for field location capture and transect positioning (survey-grade if RTK-enabled).",
+      "short": "Handheld GPS for field location capture.",
+      "img": "images/GARMINHandheldGPS.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Nikon DSLR Camera with DHP Lens",
+      "model": "Nikon DSLR + DHP Lens",
+      "category": "Imaging",
+      "description": "High-resolution DSLR camera suitable for plot photography, field documentation and image-based canopy analysis with a DHP (digital hemispherical photography) lens.",
+      "short": "DSLR camera equipped for hemispherical canopy photography.",
+      "img": "images/NikonFishEyeLens.jpg"
+    }
+  ]
+}

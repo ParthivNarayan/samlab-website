@@ -1,0 +1,74 @@
+{
+  "top": [
+    {
+      "title": "Decadal land use & land cover for India (1985, 1995, 2005)",
+      "venue": "Remote Sensing",
+      "year": "2015",
+      "link": "https://www.mdpi.com/2072-4292/7/3/2401India",
+      "note": "200+ citations"
+    },
+    {
+      "title": "Watershed dynamics via CA–Markov with geo-information",
+      "venue": "Journal of Earth System Science",
+      "year": "2012",
+      "link": "https://link.springer.com/article/10.1007/s12040-012-0207-5",
+      "note": "200+ citations"
+    },
+    {
+      "title": "New vegetation type map of India from satellite data",
+      "venue": "Int. J. Applied Earth Observation & Geoinformation",
+      "year": "2015",
+      "link": "https://www.sciencedirect.com/science/article/pii/S0303243415000574",
+      "note": "200+ citations"
+    },
+    {
+      "title": "AGB estimation using multi-sensor synergy & ML in dense tropics",
+      "venue": "Applied Geography",
+      "year": "2018",
+      "link": "https://www.sciencedirect.com/science/article/pii/S0143622818303114",
+      "note": "200+ citations"
+    },
+    {
+      "title": "Potential ecotourism sites in Sikkim from geospatial tools",
+      "venue": "Tropical Ecology",
+      "year": "2010",
+      "link": "https://www.cabidigitallibrary.org/doi/full/10.5555/20103030865",
+      "note": "150+ citations"
+    },
+    {
+      "title": "Future of endemic flora in India’s biodiversity hotspots",
+      "venue": "PLOS ONE",
+      "year": "2014",
+      "link": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0115264",
+      "note": "150+ citations"
+    },
+    {
+      "title": "Anthropogenic LULC change: environmental & climate impacts (review)",
+      "venue": "JISRS",
+      "year": "2022",
+      "link": "https://link.springer.com/article/10.1007/s12524-022-01569-w",
+      "note": "100+ citations"
+    },
+    {
+      "title": "Sustainability assessment for ecotourism (Delphi, C&I, participatory)",
+      "venue": "Tourism Management Perspectives",
+      "year": "2017",
+      "link": "https://www.sciencedirect.com/science/article/pii/S2211973616300976",
+      "note": "100+ citations"
+    },
+    {
+      "title": "Pan-India decadal LULC classifications (dataset)",
+      "venue": "ORNL DAAC",
+      "year": "2016",
+      "link": "https://daac.ornl.gov/VEGETATION/guides/Decadal_LULC_India.html?trk=public_post_comment-text/1000",
+      "note": "100+ citations"
+    },
+    {
+      "title": "AGB & carbon stock in tropical deciduous forests",
+      "venue": "Ecological Engineering",
+      "year": "2017",
+      "link": "https://www.sciencedirect.com/science/article/pii/S0925857416306693",
+      "note": "100+ citations"
+    }
+  ]
+}

@@ -32,29 +32,50 @@
 <body class="page-instruments">
 
   <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="brand"><img class="brand-logo" src="images/samlab-logo.png" alt="SAM Lab Logo"></a>
-      <nav class="main-nav" aria-label="Primary">
-        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-        <ul id="nav-links" class="nav-list">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="abouts.html">About</a></li>
-          <li><a href="team.html">People</a></li>
-          <li><a href="publications.html">Publications</a></li>
-          <li><a href="instruments.html" class="active">Instruments</a></li>
-        </ul>
-      </nav>
+<header class="site-header">
+  <div class="container header-inner">
+
+    <!-- LEFT SIDE → LOGO ROW -->
+    <div class="brand-logos">
+
+      <a href="https://www.iitkgp.ac.in/" target="_blank" rel="noopener" class="logo-link">
+        <img class="brand-logo" src="images/iitkgp.png" alt="IIT Kharagpur Logo" />
+      </a>
+
+      <a href="https://www.iitkgp.ac.in/department/CL" target="_blank" rel="noopener" class="logo-link">
+        <img class="brand-logo" src="images/coral.jpg" alt="CORAL Logo" />
+      </a>
+
+      <a href="index.html" class="logo-link">
+        <img class="brand-logo" src="images/samlab-logo.png" alt="SAM Lab Logo" />
+      </a>
+
     </div>
-  </header>
+
+    <!-- RIGHT SIDE → NAVIGATION -->
+    <nav class="main-nav" aria-label="Primary">
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul id="nav-links" class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="abouts.html">About</a></li>
+        <li><a href="team.html">People</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="instruments.html" class="active">Instruments</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
 
   <!-- Hero -->
   <section class="subhero">
     <div class="container">
       <h1>Lab Instruments</h1>
-      <p class="muted">Key instruments at SAM Lab — short description and photo. Click <strong>Details</strong> for a larger view.</p>
+      <p class="muted">SAMLab houses state of the art laboratory and field instruments supporting advanced research in Remote Sensing and Ecological Analysis. All equipment is meticulously maintained by the SAMLab team. Authorized researchers and students may request access to these instruments. Please expand each instrument card to view its current availability.</p>
     </div>
   </section>
 
@@ -81,7 +102,10 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 SAM Lab, CORAL, IIT Kharagpur</p>
+      <p>&copy; 2025 SAM Lab, Centre for Ocean, River, Atmosphere &amp; Land Sciences (CORAL), IIT Kharagpur. All rights reserved.</p>
+      <p class="muted small">
+        Address: J C Ghosh &amp; P C Ray Twin Science Block, IIT Kharagpur, Paschim Medinipur, West Bengal, India – 721302
+      </p>
     </div>
   </footer>
 
@@ -89,124 +113,160 @@
   <div id="modalRoot" style="display:none"></div>
 
   <!-- Script: fetch data/instruments.json and render -->
-  <script>
-  (function(){
-    const grid = document.getElementById('instrumentsGrid');
-    const empty = document.getElementById('instrumentsEmpty');
-    const search = document.getElementById('instrSearch');
-    const category = document.getElementById('instrCategory');
-    const downloadBtn = document.getElementById('downloadJson');
-    const modalRoot = document.getElementById('modalRoot');
 
-    let INSTR = [];
+<script>
+(function(){
+  const grid = document.getElementById('instrumentsGrid');
+  const empty = document.getElementById('instrumentsEmpty');
+  const search = document.getElementById('instrSearch');
+  const category = document.getElementById('instrCategory');
+  const downloadBtn = document.getElementById('downloadJson');
 
-    function cardHTML(item){
-      const img = item.img || 'images/placeholder.jpg';
-      return `
-        <article class="instrument-card" data-id="${item.id}">
-          <img src="${img}" alt="${item.name}">
-          <div class="instrument-meta" style="flex:1">
-            <div style="display:flex;justify-content:space-between;align-items:start">
-              <div>
-                <div class="title">${item.name}</div>
-                <div class="subtitle">${item.category || ''} ${item.model ? ' • ' + item.model : ''}</div>
-              </div>
-              <div><button class="btn btn--ghost btn-small btn-details">Details</button></div>
+  let INSTR = [];
+
+  // Build card HTML with hidden details block (includes availability)
+  function cardHTML(item){
+    const img = item.img || 'images/placeholder.jpg';
+
+    // availability mapping (normalize to class)
+    const avRaw = (item.availability||'').toString().toLowerCase();
+    let avClass = 'unavailable', avText = (item.availability||'—');
+    if (avRaw.includes('avail') || avRaw.includes('yes') || avRaw.includes('available')) { avClass = 'available'; avText = item.availability; }
+    else if (avRaw.includes('limited') || avRaw.includes('part') || avRaw.includes('book')) { avClass = 'limited'; avText = item.availability; }
+    else if (!avRaw || avRaw === 'n/a' || avRaw === '—') { avClass = 'unavailable'; avText = item.availability || 'Not specified'; }
+
+    return `
+      <article class="instrument-card" tabindex="0" role="button" aria-expanded="false" data-id="${item.id}">
+        <img src="${img}" alt="${item.name}">
+        <div class="instrument-meta" style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:start">
+            <div>
+              <div class="title">${item.name}</div>
+              <div class="subtitle">${item.category || ''}${item.model ? ' • ' + item.model : ''}</div>
             </div>
-            <div class="desc">${item.description || ''}</div>
+            <div style="display:flex; gap:.5rem; align-items:center;">
+              <!-- kept intentionally empty so no modal button appears -->
+            </div>
           </div>
-        </article>
-      `;
-    }
 
-    function render(list){
-      grid.innerHTML = '';
-      if(!list || !list.length){
-        empty.style.display = 'block';
-        return;
-      }
-      empty.style.display = 'none';
-      grid.innerHTML = list.map(cardHTML).join('');
-      // wire details buttons
-      grid.querySelectorAll('.btn-details').forEach(b => b.addEventListener('click', e => {
-        const article = e.target.closest('.instrument-card');
-        const id = article.getAttribute('data-id');
-        const item = INSTR.find(x=>String(x.id) === String(id));
-        openModal(item);
-      }));
-    }
+          <div class="desc">${item.short || item.description || ''}</div>
 
-    // modal
-    function openModal(item){
-      modalRoot.innerHTML = `
-        <div class="modal-backdrop" role="dialog" aria-modal="true">
-          <div class="modal">
-            <div class="modal-header" style="display:flex;justify-content:space-between;">
-              <strong>${item.name}</strong>
-              <button id="closeModal" class="btn btn--ghost">Close</button>
-            </div>
-            <div class="modal-body">
-              <img src="${item.img || 'images/placeholder.jpg'}" alt="${item.name}">
-              <div>
-                <h3 style="margin-top:0">${item.model || ''} <span style="color:var(--muted); font-weight:600">${item.category || ''}</span></h3>
-                <p class="muted">${item.short || ''}</p>
-                <p style="margin:.4rem 0">${item.description || ''}</p>
-                ${item.datasheet ? `<p><a class="btn btn--primary" href="${item.datasheet}" target="_blank" rel="noopener">Download Datasheet</a></p>` : ''}
+          <!-- hidden expandable details -->
+          <div class="instrument-details" aria-hidden="true">
+            <div class="meta-row">
+              <div class="meta-col">
+                <p class="small"><strong>Description</strong></p>
+                <p>${item.description || '—'}</p>
               </div>
+
+              <div class="meta-col">
+                <p class="small"><strong>Model</strong></p>
+                <p>${item.model || '—'}</p>
+
+                <p class="small" style="margin-top:.5rem"><strong>Category</strong></p>
+                <p>${item.category || '—'}</p>
+
+                ${item.location ? `<p class="small" style="margin-top:.5rem"><strong>Location</strong></p><p>${item.location}</p>` : ''}
+                ${item.contact ? `<p class="small" style="margin-top:.5rem"><strong>Contact</strong></p><p>${item.contact}</p>` : ''}
+
+                <p class="small" style="margin-top:.5rem"><strong>Availability</strong></p>
+                <p><span class="availability ${avClass}">${avText}</span></p>
+              </div>
+            </div>
+
+            <div style="margin-top:.6rem; display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;">
+              ${item.datasheet ? `<a class="btn btn--ghost btn-small" href="${item.datasheet}" target="_blank" rel="noopener">Datasheet</a>` : ''}
+              ${item.note ? `<span class="small muted" style="margin-left:.5rem">${item.note}</span>` : ''}
             </div>
           </div>
         </div>
-      `;
-      modalRoot.style.display = 'block';
-      document.getElementById('closeModal').addEventListener('click', closeModal);
-      modalRoot.querySelector('.modal-backdrop').addEventListener('click', (ev)=> {
-        if(ev.target.classList.contains('modal-backdrop')) closeModal();
-      });
+      </article>
+    `;
+  }
+
+  function render(list){
+    grid.innerHTML = '';
+    if(!list || !list.length){
+      empty.style.display = 'block';
+      return;
     }
-    function closeModal(){ modalRoot.innerHTML=''; modalRoot.style.display='none'; }
+    empty.style.display = 'none';
+    grid.innerHTML = list.map(cardHTML).join('');
 
-    function applyFilters(){
-      const q = (search.value||'').toLowerCase().trim();
-      const cat = (category.value||'all');
+    // Wire interactions: expand/collapse on card click and keyboard
+    grid.querySelectorAll('.instrument-card').forEach(card => {
+      const toggle = (ev) => {
+        // ignore clicks on links or interactive children
+        const target = ev.target;
+        if (target.closest('a') || target.closest('button')) {
+          return;
+        }
+        const expanded = card.classList.toggle('expanded');
+        card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        const details = card.querySelector('.instrument-details');
+        if (details) details.setAttribute('aria-hidden', expanded ? 'false' : 'true');
 
-      const filtered = INSTR.filter(i => {
-        const hay = [i.name,i.model,i.category,i.description].join(' ').toLowerCase();
-        const matchQ = q ? hay.indexOf(q) !== -1 : true;
-        const matchCat = cat === 'all' ? true : (String(i.category||'').toLowerCase().indexOf(cat.toLowerCase()) !== -1);
-        return matchQ && matchCat;
+        if (expanded && window.innerWidth < 900) {
+          setTimeout(()=> card.scrollIntoView({behavior:'smooth', block:'center'}), 160);
+        }
+      };
+
+      card.addEventListener('click', toggle);
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle(e);
+        }
       });
+    });
+  }
 
-      // Sort by name
-      filtered.sort((a,b) => (a.name||'').localeCompare(b.name||''));
-      render(filtered);
-    }
+  function applyFilters(){
+    const q = (search.value||'').toLowerCase().trim();
+    const cat = (category.value||'all');
 
-    // download JSON button
-    downloadBtn.addEventListener('click', ()=> {
-      const blob = new Blob([JSON.stringify(INSTR, null, 2)], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'instruments.json'; document.body.appendChild(a); a.click();
-      URL.revokeObjectURL(url); a.remove();
+    const filtered = INSTR.filter(i => {
+      const hay = [i.name,i.model,i.category,i.description, i.short, i.location, i.contact, i.availability].join(' ').toLowerCase();
+      const matchQ = q ? hay.indexOf(q) !== -1 : true;
+      const matchCat = cat === 'all' ? true : (String(i.category||'').toLowerCase().indexOf(cat.toLowerCase()) !== -1);
+      return matchQ && matchCat;
     });
 
-    // fetch the data
-    fetch('data/instruments.json')
-      .then(r => r.ok ? r.json() : Promise.reject('no instruments'))
-      .then(json => {
-        INSTR = (json.instruments||[]).map((it, idx) => Object.assign({}, it, { id: it.id || idx+1 }));
-        applyFilters();
-      })
-      .catch(e => {
-        console.warn('instruments fetch failed', e);
-        grid.innerHTML = '<div class="muted">Could not load instruments (data/instruments.json).</div>';
-      });
+    // Sort by name
+    filtered.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+    render(filtered);
+  }
 
-    // wire controls
-    search.addEventListener('input', applyFilters);
-    category.addEventListener('change', applyFilters);
+  // download JSON
+  downloadBtn.addEventListener('click', ()=> {
+    const blob = new Blob([JSON.stringify(INSTR, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'instruments.json'; document.body.appendChild(a); a.click();
+    URL.revokeObjectURL(url); a.remove();
+  });
 
-  })();
-  </script>
+  // fetch data and init
+  fetch('data/instruments.json')
+    .then(r => r.ok ? r.json() : Promise.reject('no instruments'))
+    .then(json => {
+      INSTR = (json.instruments||[]).map((it, idx) => Object.assign({}, it, { id: it.id || idx+1 }));
+      applyFilters();
+    })
+    .catch(e => {
+      console.warn('instruments fetch failed', e);
+      grid.innerHTML = '<div class="muted">Could not load instruments (data/instruments.json).</div>';
+    });
+
+  // wire controls
+  search.addEventListener('input', applyFilters);
+  category.addEventListener('change', applyFilters);
+
+})();
+</script>
+
+
+
 </body>
 </html>

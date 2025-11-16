@@ -5,63 +5,70 @@
       "name": "LAI-2200C Plant Canopy Analyzer (LI-COR Environmental)",
       "model": "LAI-2200C",
       "category": "Lab Analysis",
-      "description": "Optical instrument for measuring Leaf Area Index (LAI) and canopy structure using canopy gap fraction and radiation measurements.",
+      "description": "It is a widely used scientific instrument designed to measure Leaf Area Index (LAI) and characterise plant canopy structure with high accuracy. It uses a fisheye optical sensor to capture light attenuation at multiple angles, allowing non-destructive, rapid assessment of canopy density, foliage distribution, and canopy light interception. The instrument is effective in forests, crops, and natural vegetation, even under low-light or diffuse sky conditions. Its portability, reliability, and ability to provide real-time LAI and canopy metrics make it a standard tool for ecological monitoring, ecosystem productivity studies, and vegetation modeling.",
       "short": "Measures Leaf Area Index and canopy structure.",
-      "img": "images/LAI-2200CPlantCanopyAnalyzer.jpg"
+      "img": "images/LAI-2200CPlantCanopyAnalyzer.jpg",
+      "availability": "Available"
     },
     {
       "id": 2,
       "name": "SPAD-502 Chlorophyll Meter",
       "model": "SPAD-502",
       "category": "Lab Analysis",
-      "description": "Handheld chlorophyll meter providing rapid SPAD readings to estimate leaf chlorophyll content and plant health in the field.",
+      "description": "It is a portable, non-destructive device used to quickly assess the chlorophyll content of leaves, which is an indicator of plant health, nitrogen status, and photosynthetic capacity. It works by measuring the light transmitted through a leaf at two wavelengths, red and near-infrared, to generate a SPAD value that correlates with chlorophyll concentration. Widely used in agriculture, forestry, and ecological research, the SPAD-502 enables rapid field measurements without damaging the plant, helping researchers and farmers monitor nutrient status, detect stress, and support precision management practices.",
       "short": "Handheld chlorophyll (SPAD) meter for leaf chlorophyll content.",
-      "img": "images/SPADChlorophyllMeter.jpg"
+      "img": "images/SPADChlorophyllMeter.jpg",
+      "availability": "Available"
     },
     {
       "id": 3,
       "name": "Phenomet Tower",
       "model": "Custom Phenomet Tower",
       "category": "Field Equipment",
-      "description": "A field-deployed tower mounting sensors (NDVI, PAR, temperature/humidity) for continuous phenology observations and canopy monitoring.",
+      "description": "it is a fixed environmental monitoring structure equipped with sensors and cameras designed to track vegetation phenology and microclimatic conditions continuously. From its elevated platform, the tower captures high-resolution images and environmental data such as temperature, humidity, radiation, and canopy changes allowing researchers to observe seasonal plant responses, growth patterns, and ecosystem dynamics over time. It serves as a key tool for long-term ecological monitoring and climate–vegetation interaction studies.",
       "short": "Field tower for continuous phenology & canopy observations.",
-      "img": "images/Pheno-meteorologicalTower.jpg"
+      "img": "images/Pheno-meteorologicalTower.jpg",
+      "availability": "Available"
     },
     {
       "id": 4,
       "name": "Terrestrial LiDAR Scanner (TLS)",
       "model": "RIEGLTLSVZ-400i",
       "category": "Remote Sensing",
-      "description": "High-resolution ground-based LiDAR scanner for 3D canopy and terrain mapping, structural analysis, and biomass estimation.",
+      "description": "It is a ground-based laser scanning system that captures highly detailed 3D measurements of landscapes, vegetation, and structural features. By emitting thousands of laser pulses per second and recording their return times, the TLS generates dense point clouds that accurately represent surface geometry. It is widely used in forestry, ecology, and geomorphology for mapping tree structure, estimating biomass, and analysing terrain with exceptional precision.",
       "short": "Ground-based LiDAR for 3D canopy & terrain mapping.",
-      "img": "images/RIEGLTLSVZ-400i.jpg"
+      "img": "images/RIEGLTLSVZ-400i.jpg",
+      "availability": "limited"
     },
     {
       "id": 5,
       "name": "Laser Range Finder",
       "model": "Handheld LRF",
       "category": "Field Equipment",
-      "description": "Portable laser distance meter for accurate distance and slope measurements during field surveys.",
+      "description": "It is a compact, high-precision device used to measure distances by emitting a laser beam and calculating the time it takes to return. It provides fast and accurate distance readings, making it valuable in ecological surveys, forestry measurements, and field mapping. The tool helps researchers estimate tree heights, plot dimensions, and spatial separation between features, offering reliable measurements even in challenging outdoor conditions.",
       "short": "Handheld laser distance meter for field measurements.",
-      "img": "images/NikonLaserRangeFinder.jpg"
+      "img": "images/NikonLaserRangeFinder.jpg",
+      "availability": "Available"
     },
     {
       "id": 6,
       "name": "Handheld GPS (Survey)",
       "model": "Handheld GPS",
       "category": "Field Equipment",
-      "description": "Handheld GPS unit used for field location capture and transect positioning (survey-grade if RTK-enabled).",
+      "description": "It is a portable, rugged device used to accurately determine geographic location, track field routes, and record spatial coordinates during outdoor surveys. It uses satellite signals to provide real-time positioning, typically with high accuracy even in remote or forested environments. Handheld GPS units are essential tools in ecological fieldwork, mapping, navigation, and geospatial data collection. They allow researchers to mark sampling points, record transects, and integrate field observations with GIS-based analyses, ensuring precise spatial referencing for scientific studies and environmental monitoring.",
       "short": "Handheld GPS for field location capture.",
-      "img": "images/GARMINHandheldGPS.jpg"
+      "img": "images/GARMINHandheldGPS.jpg",
+      "availability": "Available"
     },
     {
       "id": 7,
       "name": "Nikon DSLR Camera with DHP Lens",
       "model": "Nikon DSLR + DHP Lens",
       "category": "Imaging",
-      "description": "High-resolution DSLR camera suitable for plot photography, field documentation and image-based canopy analysis with a DHP (digital hemispherical photography) lens.",
+      "description": "It is a high-resolution imaging system designed for capturing detailed photographs in field and research applications. The DSLR body provides excellent low-light performance, fast shutter response, and high image clarity, while the DHP (Digital High-Precision) lens enhances sharpness, colour accuracy, and depth of field. This combination is suitable for documenting vegetation, land features, experimental plots, and ecological field conditions with precision. Its rugged build, interchangeable lenses, and reliable optical performance make it a valuable tool for scientific documentation, landscape imaging, and high-quality photographic records.",
       "short": "DSLR camera equipped for hemispherical canopy photography.",
-      "img": "images/NikonFishEyeLens.jpg"
+      "img": "images/NikonFishEyeLens.jpg",
+      "availability": "Available"
     }
   ]
 }

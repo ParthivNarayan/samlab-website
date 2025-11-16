@@ -20,25 +20,44 @@
   <script src="scripts.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="brand">
+<header class="site-header">
+  <div class="container header-inner">
+
+    <!-- LEFT SIDE → LOGO ROW -->
+    <div class="brand-logos">
+
+      <a href="https://www.iitkgp.ac.in/" target="_blank" rel="noopener" class="logo-link">
+        <img class="brand-logo" src="images/iitkgp.png" alt="IIT Kharagpur Logo" />
+      </a>
+
+      <a href="https://www.iitkgp.ac.in/department/CL" target="_blank" rel="noopener" class="logo-link">
+        <img class="brand-logo" src="images/coral.jpg" alt="CORAL Logo" />
+      </a>
+
+      <a href="index.html" class="logo-link">
         <img class="brand-logo" src="images/samlab-logo.png" alt="SAM Lab Logo" />
       </a>
-      <nav class="main-nav" aria-label="Primary">
-        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-        <ul id="nav-links" class="nav-list">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="abouts.html" class="active">About</a></li>
-          <li><a href="team.html">People</a></li>
-          <li><a href="publications.html">Publications</a></li>
-          <li><a href="instruments.html">Instruments</a></li>
-        </ul>
-      </nav>
+
     </div>
-  </header>
+
+    <!-- RIGHT SIDE → NAVIGATION -->
+    <nav class="main-nav" aria-label="Primary">
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul id="nav-links" class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="abouts.html" class="active">About</a></li>
+        <li><a href="team.html">People</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="instruments.html">Instruments</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
 
   <section class="subhero">
     <div class="container">
@@ -107,7 +126,10 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 SAM Lab, CORAL, IIT Kharagpur.</p>
+      <p>&copy; 2025 SAM Lab, Centre for Ocean, River, Atmosphere &amp; Land Sciences (CORAL), IIT Kharagpur. All rights reserved.</p>
+      <p class="muted small">
+        Address: J C Ghosh &amp; P C Ray Twin Science Block, IIT Kharagpur, Paschim Medinipur, West Bengal, India – 721302
+      </p>
     </div>
   </footer>
 
